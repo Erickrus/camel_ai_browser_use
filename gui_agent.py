@@ -10,8 +10,9 @@ from camel.types import ModelPlatformType, ModelType
 from camel.configs import DeepSeekConfig
 from camel.toolkits import FunctionTool, SearchToolkit
 
-
-from _camel.toolkits.browser_use_toolkit import BrowserUseToolkit
+# Notice:
+# You may need integrate this file into the camelai's package
+from camel.toolkits.browser_use_toolkit import BrowserUseToolkit
 
 def main():
     print("camel agent with BrowserUseToolkit() ")
