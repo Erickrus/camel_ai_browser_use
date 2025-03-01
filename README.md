@@ -7,7 +7,7 @@ With the rise of Large Language Models (LLMs), AI agents are transforming produc
 BrowserUseToolkit is a standard CamelAI toolkit implementation. It should be installed in CamelAI agent projects. This tool receives an instruction and sends it to the browser-use agent. Since GUI automation tasks can take a fairly long time, it submits the task and performs rolling polling to check if the task has finished and produced results.
 
 ## 2. Browser Use Service (`browser_use_service.py`)
-The Browser Use service is the backend component responsible for executing web automation task. The service can only work on one specific task at a time. If other tasks are submitted, they will be pending until the current task is finished.
+The Browser Use Service is the backend component responsible for executing web automation task. The service can only work on one specific task at a time. If other tasks are submitted, they will be pending until the current task is finished. 
 
 ```mermaid
 sequenceDiagram
@@ -31,7 +31,13 @@ sequenceDiagram
     end
 ```
 
-About Browser Use Installation, please refer to the [Browser Use](https://github.com/browser-use/browser-use) page.
+### Customization
+
+You may need do some customization by yourself, to set up .env file, the browser configuration etc.
+
+### BrowserUse Installation
+
+Please refer to the [Browser Use](https://github.com/browser-use/browser-use) page.
 
 With pip (Python>=3.11):
 
