@@ -4,10 +4,10 @@
 With the rise of Large Language Models (LLMs), AI agents are transforming productivity across various fields. Typically seen as standalone tools, these agents can achieve even more when working together. This repository explores the collaboration between two distinct agents: the [CamelAI](https://github.com/camel-ai/camel/) Framework, which excels in generation and planning, and the [Browser Use](https://github.com/browser-use/browser-use), specialized in GUI-based automation tasks. By connecting their strengths, we can create a powerful synergy where one agent's capabilities complement the other's limitations. This initial trial demonstrates how heterogeneous agents can work together seamlessly, unlocking new possibilities for complex tasks that require both creativity and precision.
 
 ## 1. Browser Use Toolkit 
-BrowserUseToolkit(`browser_use_toolkit.py`) is a standard CamelAI toolkit implementation. It should be installed in CamelAI agent projects. This tool receives an instruction and sends it to the browser-use agent. Since GUI automation tasks can take a fairly long time, it submits the task and performs rolling polling to check if the task has finished and produced results.
+BrowserUseToolkit (`browser_use_toolkit.py`) is a standard CamelAI toolkit implementation. It should be installed in CamelAI agent projects. This tool receives an instruction and sends it to the browser-use agent. Since GUI automation tasks can take a fairly long time, it submits the task and performs rolling polling to check if the task has finished and produced results.
 
 ## 2. Browser Use Service
-BrowserUseService(`browser_use_service.py`) is the backend component responsible for executing web automation task. The service can only work on one specific task at a time. If other tasks are submitted, they will be pending until the current task is finished. 
+BrowserUseService (`browser_use_service.py`) is the backend component responsible for executing web automation task. The service can only work on one specific task at a time. If other tasks are submitted, they will be pending until the current task is finished. 
 
 ```mermaid
 sequenceDiagram
@@ -51,5 +51,5 @@ install playwright:
 playwright install
 ```
 
-## 3. CamelAI Agent Demo Code (`gui_agent.py`)
-The code demonstrates how to use the toolkit. 
+## 3. CamelAI Agent Demo Code
+The code (`gui_agent.py`) demonstrates how to use the toolkit. 
