@@ -33,14 +33,20 @@ sequenceDiagram
 
 ### Customization
 
-You may need do some customization by yourself, to set up .env file, the browser configuration etc. The service default port is `4999`.
-
-Following is an example `.env` file of `browser_use_service.py`. Place them in the same folder. 
+You may need do some customization by yourself, to set up .env file, the browser configuration etc. The service default port is `4999`. Following is an example `.env` file of `browser_use_service.py`. Place them in the same folder. 
 ```
 OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
+MODEL_NAME=gpt-4o-mini
 USERNAME=user
 PASSWORD=password
-MODEL_NAME=gpt-4o-mini
+```
+
+Here, `USERNAME` and `PASSWORD` are sensitive_data will be passed to BrowserUse Agent.
+```python
+sensitive_data = {
+    'x_name': os.environ['USERNAME'],
+    'x_password': os.environ['PASSWORD']
+}
 ```
 
 ### BrowserUse Installation
