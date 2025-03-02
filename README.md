@@ -13,18 +13,18 @@ BrowserUseService (`browser_use_service.py`) is the backend component responsibl
 sequenceDiagram
     participant CamelAI_Agent as CamelAI Agent
     participant BrowserUseService as Browser Use Service
-    participant BrowserUse as Browser Use
+    participant BrowserUseAgent as Browser Use Agent
 
     CamelAI_Agent->>BrowserUseService: Submit Task with Instructions
     BrowserUseService-->>CamelAI_Agent: Return task_id
 
-    BrowserUseService->>BrowserUse: Submit Task for Automation
+    BrowserUseService->>BrowserUseAgent: Submit Task for Automation
     loop Every 2 seconds
         CamelAI_Agent->>BrowserUseService: Query Status with task_id
         alt Task is not completed
             BrowserUseService-->>CamelAI_Agent: Status: In Progress
         else Task is completed
-            BrowserUse-->>BrowserUseService: Return Results
+            BrowserUseAgent-->>BrowserUseService: Return Results
             BrowserUseService-->>CamelAI_Agent: Status: Completed
             BrowserUseService-->>CamelAI_Agent: Return Results
         end
@@ -33,7 +33,15 @@ sequenceDiagram
 
 ### Customization
 
-You may need do some customization by yourself, to set up .env file, the browser configuration etc.
+You may need do some customization by yourself, to set up .env file, the browser configuration etc. The service default port is `4999`.
+
+Following is an example `.env` file of `browser_use_service.py`. Place them in the same folder. 
+```
+OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
+USERNAME=user
+PASSWORD=password
+MODEL_NAME=gpt-4o-mini
+```
 
 ### BrowserUse Installation
 
@@ -50,6 +58,8 @@ install playwright:
 ```bash
 playwright install
 ```
+
+
 
 ## 3. CamelAI Agent Demo Code
 The code (`gui_agent.py`) demonstrates how to use the toolkit. 
