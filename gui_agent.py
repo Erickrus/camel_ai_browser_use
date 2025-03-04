@@ -1,5 +1,6 @@
 import os
-
+import logging
+import sys
 
 from camel.agents.chat_agent import ChatAgent
 from camel.messages.base import BaseMessage
@@ -10,8 +11,6 @@ from camel.types import ModelPlatformType, ModelType
 from camel.configs import DeepSeekConfig
 from camel.toolkits import FunctionTool, SearchToolkit
 
-# Notice:
-# You may need integrate this file into the camelai's package
 from camel.toolkits.browser_use_toolkit import BrowserUseToolkit
 
 def main():
@@ -35,10 +34,10 @@ def main():
     print(gui_agent.role_name)
     print(gui_agent._original_system_message.content)
     usr_msg = """Task:
-  To access http://localhost:8089; login with x_name and x_password; place an order there with brand: Brand-A, size: XXL, qty:10 . Finally logout. You need use BrowserUseTool to execute these steps and check the output from the tool.
+  To access http://localhost:8089; login with x_name and x_password; place an order there with brand: Brand-A, size: XXL, qty:10 . Finally logout. You need use BrowserUseTool to execute these steps and logout.
 
 expected_output:
-  The order is placed successfully and the browser use exit
+  The tool completes successfully and no error returns
 """
     print(usr_msg)
     response = gui_agent.step(input_message=usr_msg, response_format=None)
