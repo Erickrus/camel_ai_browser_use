@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+import json
 import time
 import threading
 import uuid
@@ -41,10 +42,11 @@ def process_task(task_id, objective):
 
     async def run_browser_use(objective):
         try:
+            browser = Browser()
             agent = Agent(
                 task=objective,
                 browser_context=BrowserContext(
-                    browser=Browser(),
+                    browser=browser,
                     config=BrowserContextConfig(
                         browser_window_size={'width': 540, 'height': 768},
                         viewport_expansion=768
@@ -61,23 +63,29 @@ def process_task(task_id, objective):
         except Exception as e:
             logger.error(f"Error in agent.run(): {e}", exc_info=True)
             results = {}
+        finally:
+            await browser.close()
         return results
 
     # Ensure we are in a new event loop
     loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    results = loop.run_until_complete(run_browser_use(objective))
-    loop.close()
+    try:
+        asyncio.set_event_loop(loop)
+        results = loop.run_until_complete(run_browser_use(objective))
+        logger.info("Browser-Use agent finished.")
+        results = results.final_result()
+    except Exception as e:
+        logger.error(f"Error in agent.run(): {e}", exc_info=True)
+    finally:
+        loop.close()
 
-    logger.info("Browser-Use agent finished.")
-
-    # Update the task status and results
+    # Update the task status and results    
     tasks[task_id] = {
         "status": "completed",
         "message": f"Objective completed: {objective}",
         "results": results
     }
-
+    logger.info("Browser-Use agent finished.")
 
 @app.route('/probe', methods=['GET'])
 def probe():
@@ -110,6 +118,7 @@ def query(task_id):
     if task["status"] == "processing":
         return jsonify({"status": "processing"}), 202
     elif task["status"] == "completed":
+        logger.info(f"Task is completed: {task}")
         return jsonify(task), 200
 
 if __name__ == '__main__':
