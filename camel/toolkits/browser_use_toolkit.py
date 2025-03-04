@@ -94,9 +94,10 @@ class BrowserUseToolkit(BaseToolkit):
             while time.time() - start_time < timeout:
                 status = self.browser_use_api.query_task_status(task_id)
                 if status.get("status") == "completed":
+                    logger.info(status.get("results"))
                     return json.dumps({
                         "status": "success",
-                        "result": status.get("data"),
+                        "result": status.get("results"),
                         "message": status.get("message", "Task completed")
                     })
                 elif status.get("status") == "processing":
